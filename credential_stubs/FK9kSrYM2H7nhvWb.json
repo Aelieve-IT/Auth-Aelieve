@@ -1,0 +1,19 @@
+{
+  "id": "FK9kSrYM2H7nhvWb",
+  "name": "Mailjet Email account",
+  "type": "mailjetEmailApi",
+  "data": {
+    "apiKey": "",
+    "secretKey": ""
+  },
+  "nodesAccess": [
+    {
+      "nodeType": "n8n-nodes-base.mailjet",
+      "date": "2024-03-06T03:44:30.238Z"
+    },
+    {
+      "nodeType": "n8n-nodes-base.mailjetTrigger",
+      "date": "2024-03-06T03:44:30.238Z"
+    }
+  ]
+}
