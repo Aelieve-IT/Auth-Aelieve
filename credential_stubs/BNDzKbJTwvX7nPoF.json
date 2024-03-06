@@ -1,0 +1,27 @@
+{
+  "id": "BNDzKbJTwvX7nPoF",
+  "name": "Aelieve Prod",
+  "type": "supabaseApi",
+  "data": {
+    "host": "",
+    "serviceRole": ""
+  },
+  "nodesAccess": [
+    {
+      "nodeType": "n8n-nodes-base.supabase",
+      "date": "2024-03-06T02:19:12.618Z"
+    },
+    {
+      "nodeType": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "date": "2024-03-06T02:19:12.618Z"
+    },
+    {
+      "nodeType": "@n8n/n8n-nodes-langchain.vectorStoreSupabaseInsert",
+      "date": "2024-03-06T02:19:12.618Z"
+    },
+    {
+      "nodeType": "@n8n/n8n-nodes-langchain.vectorStoreSupabaseLoad",
+      "date": "2024-03-06T02:19:12.618Z"
+    }
+  ]
+}

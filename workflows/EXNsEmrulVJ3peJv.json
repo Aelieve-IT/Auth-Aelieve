@@ -1,0 +1,485 @@
+{
+  "id": "EXNsEmrulVJ3peJv",
+  "name": "Aelieve App | Email Recieving",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "13646fb3-9614-456c-a25d-fe62e060de04",
+        "options": {}
+      },
+      "id": "832e1e01-f41a-4b18-af47-7edd9e0fd211",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        1400,
+        520
+      ],
+      "webhookId": "13646fb3-9614-456c-a25d-fe62e060de04"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "value": "display_items",
+          "mode": "list",
+          "cachedResultName": "display_items"
+        },
+        "table": {
+          "__rl": true,
+          "value": "Inbox_Emails",
+          "mode": "list",
+          "cachedResultName": "Inbox_Emails"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "sender": "={{ $json.body.Sender }}",
+            "recipient": "={{ $json.body.Recipient }}",
+            "date": "={{ $json.body.Date }}",
+            "from": "={{ $json.body.From }}",
+            "subject": "={{ $json.body.Subject }}",
+            "headers": "={{ $json.body.Headers }}",
+            "html-part": "={{ $json.body[\"Html-part\"] }}",
+            "spamassassinScore": "={{ $json.body.SpamAssassinScore }}",
+            "customid": "={{ $json.body.CustomID }}",
+            "text-part": "={{ $json[\"$('Code')\"].item.json.cleanedMessage }}",
+            "id": "={{ $json.id + 1}}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": true,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sender",
+              "displayName": "sender",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "recipient",
+              "displayName": "recipient",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "from",
+              "displayName": "from",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "subject",
+              "displayName": "subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headers",
+              "displayName": "headers",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "text-part",
+              "displayName": "text-part",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "html-part",
+              "displayName": "html-part",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "spamassassinScore",
+              "displayName": "spamassassinScore",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "customid",
+              "displayName": "customid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "payload",
+              "displayName": "payload",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8d12149f-fd4d-4ef6-995e-55b2d887c274",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.3,
+      "position": [
+        2680,
+        340
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "GsrLrefashmMjsw3",
+          "name": "Aelieve PROD"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get input data from the previous node\nconst inputData = items[0].json.modifiedHtmlPart;\n\n// Remove all script and style elements\nlet outputData = inputData.replace(/<script[^>]*>([\\S\\s]*?)<\\/script>/gmi, '');\noutputData = outputData.replace(/<style[^>]*>([\\S\\s]*?)<\\/style>/gmi, '');\n\n// Use regex to remove all remaining HTML tags from the string\noutputData = outputData.replace(/<[^>]+>/g, '');\n\n// Normalize whitespace and split by newlines, then filter out empty lines\nconst lines = outputData.split('\\n').map(line => line.trim()).filter(line => line !== '');\n\n// Join back with single space to form the cleaned message body\nconst cleanedMessage = lines.join(' ');\n\n// Return the cleaned message body in a new item\nreturn [{json: {cleanedMessage: cleanedMessage}}];\n"
+      },
+      "id": "49146bcd-804f-4ef2-8758-a315c4149acc",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2020,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "546b83d3-23ae-454e-b599-cb7beff24043",
+              "leftValue": "={{ $json.body.Headers[\"x-ms-publictraffictype\"] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "61f8f81f-2d48-4db9-8da8-e7429a06548e",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1620,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "18f1c920-f725-48b8-8f59-e03eb1fff258",
+              "leftValue": "={{ $json.body.Headers[\"X-Google-DKIM-Signature\"] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "fe5863b0-bda9-4a95-b567-df1593d8b59b",
+      "name": "If1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get input data from the previous node\nconst inputData = items[0].json.body['Html-part'];\n\n// Check if the signature exists in the HTML\nconst signatureIndex = inputData.indexOf('<div id=\"Signature\">');\n\n// If signature exists, trim everything after it including the signature itself\nconst outputData = signatureIndex !== -1 ? inputData.substring(0, signatureIndex) : inputData;\n\n// Return the modified string in a new item\nreturn [{json: {modifiedHtmlPart: outputData}}];\n"
+      },
+      "id": "492c9e31-bea5-4733-8d1d-c644bac0519d",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1800,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get input data from the previous node\nconst inputData = items[0].json.body['Html-part'];\n\n// Check if the signature exists in the HTML\nconst signatureIndex = inputData.indexOf('<span class=\"gmail_signature_prefix\">');\n\n// If signature exists, trim everything after it including the signature itself\nconst outputData = signatureIndex !== -1 ? inputData.substring(0, signatureIndex) : inputData;\n\n// Return the modified string in a new item\nreturn [{json: {modifiedHtmlPart: outputData}}];"
+      },
+      "id": "fbe16f87-9702-4e16-bd26-3323fd864388",
+      "name": "Code2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1940,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get input data from the previous node\nconst inputData = items[0].json.modifiedHtmlPart;\n\n// Remove all script and style elements\nlet outputData = inputData.replace(/<script[^>]*>([\\S\\s]*?)<\\/script>/gmi, '');\noutputData = outputData.replace(/<style[^>]*>([\\S\\s]*?)<\\/style>/gmi, '');\n\noutputData = outputData.replace(/<blockquote[^>]*>([\\S\\s]*?)<div dir=[^>]*>[^>]*/gmi, '');\n// Use regex to remove all remaining HTML tags from the string\noutputData = outputData.replace(/<[^>]+>/g, '');\n\n// Remove email quotation lines that might follow specific patterns\noutputData = outputData.replace(/On .* wrote:/g, '');\n\n\n// Normalize whitespace and split by newlines, then filter out empty lines\nconst lines = outputData.split('\\n').map(line => line.trim()).filter(line => line !== '');\n\n// Join back with single space to form the cleaned message body\nconst cleanedMessage = lines.join(' ');\n\n// Return the cleaned message body in a new item\nreturn [{json: {cleanedMessage: cleanedMessage}}];\n"
+      },
+      "id": "bad82ea8-ba69-4f76-9f63-3e85064ac95a",
+      "name": "Code3",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "017e0d9d-4346-4c28-a82d-6bed2c0ee8b1",
+              "name": "headers",
+              "value": "={{ $('If').item.json.headers }}",
+              "type": "object"
+            },
+            {
+              "id": "221624b3-fe6d-4df1-b20b-3af0bb1a736e",
+              "name": "body",
+              "value": "={{ $('If').item.json.body }}",
+              "type": "object"
+            },
+            {
+              "id": "73de4ed4-f17f-4c39-b227-951efd22d070",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "e7ab8210-2c13-48ef-b038-2266c65e951b",
+              "name": "$('Code').item.json.cleanedMessage",
+              "value": "={{ $('Code').item.json.cleanedMessage }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3cf64e58-8d65-4c9d-851e-08dcc89df7d3",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        2460,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "value": "display_items",
+          "mode": "list",
+          "cachedResultName": "display_items"
+        },
+        "table": {
+          "__rl": true,
+          "value": "Inbox_Emails",
+          "mode": "list",
+          "cachedResultName": "Inbox_Emails"
+        },
+        "limit": 1,
+        "sort": {
+          "values": [
+            {
+              "column": "id",
+              "direction": "DESC"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "21855adb-ba50-4d54-a9f4-015e21df71af",
+      "name": "Postgres1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.3,
+      "position": [
+        2240,
+        340
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "GsrLrefashmMjsw3",
+          "name": "Aelieve PROD"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "6803db77-673b-40cc-bc20-d8085271dd35",
+  "owner": "andrew@aelieve.it"
+}

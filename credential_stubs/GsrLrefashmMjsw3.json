@@ -1,0 +1,25 @@
+{
+  "id": "GsrLrefashmMjsw3",
+  "name": "Aelieve PROD",
+  "type": "postgres",
+  "data": {
+    "host": "",
+    "user": "",
+    "password": "",
+    "port": 6543
+  },
+  "nodesAccess": [
+    {
+      "nodeType": "n8n-nodes-base.postgres",
+      "date": "2024-03-05T18:38:17.711Z"
+    },
+    {
+      "nodeType": "n8n-nodes-base.postgresTrigger",
+      "date": "2024-03-05T18:38:17.711Z"
+    },
+    {
+      "nodeType": "@n8n/n8n-nodes-langchain.agent",
+      "date": "2024-03-05T18:38:17.711Z"
+    }
+  ]
+}

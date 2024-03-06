@@ -1,0 +1,29 @@
+{
+  "id": "70UqbsAPg2KX9fXd",
+  "name": "Microsoft Outlook account",
+  "type": "microsoftOutlookOAuth2Api",
+  "data": {
+    "clientId": "",
+    "clientSecret": "",
+    "useShared": true,
+    "userPrincipalName": "",
+    "oauthTokenData": {
+      "token_type": "",
+      "scope": "",
+      "expires_in": 4346,
+      "ext_expires_in": 4346,
+      "access_token": "",
+      "refresh_token": "",
+      "id_token": "",
+      "callbackQueryString": {
+        "session_state": ""
+      }
+    }
+  },
+  "nodesAccess": [
+    {
+      "nodeType": "n8n-nodes-base.microsoftOutlook",
+      "date": "2024-03-04T23:21:27.384Z"
+    }
+  ]
+}

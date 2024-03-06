@@ -1,0 +1,14 @@
+{
+  "id": "o8fNm7L0FjWBd9D2",
+  "name": "SendGrid account",
+  "type": "sendGridApi",
+  "data": {
+    "apiKey": ""
+  },
+  "nodesAccess": [
+    {
+      "nodeType": "n8n-nodes-base.sendGrid",
+      "date": "2024-03-04T23:41:32.552Z"
+    }
+  ]
+}
