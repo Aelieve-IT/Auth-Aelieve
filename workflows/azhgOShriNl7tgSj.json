@@ -1,0 +1,419 @@
+{
+  "id": "azhgOShriNl7tgSj",
+  "name": "Aelieve App | Send Ticket Email",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "8b684c85-a1b0-47e0-87aa-870fcf8b1f9e",
+        "options": {}
+      },
+      "id": "f2552644-e36d-4b1b-8993-3660925f5c83",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        320,
+        460
+      ],
+      "webhookId": "8b684c85-a1b0-47e0-87aa-870fcf8b1f9e"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "value": "display_items",
+          "mode": "list",
+          "cachedResultName": "display_items"
+        },
+        "table": {
+          "__rl": true,
+          "value": "Inbox_Emails",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id + 1 }}",
+            "sender": "={{ $json.sender_name }} From Aelieve",
+            "recipient": "={{ $json.to_email }}",
+            "date": "={{ $now }}",
+            "from": "={{ $json.inbox_from }}",
+            "subject": "={{ $('Find Email Thread').item.json.subject }}",
+            "text-part": "={{ $json.message }}",
+            "customid": "={{ $json.ticket_id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": true,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "sender",
+              "displayName": "sender",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "recipient",
+              "displayName": "recipient",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "from",
+              "displayName": "from",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "subject",
+              "displayName": "subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "headers",
+              "displayName": "headers",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "text-part",
+              "displayName": "text-part",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "html-part",
+              "displayName": "html-part",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "spamassassinScore",
+              "displayName": "spamassassinScore",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "customid",
+              "displayName": "customid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "payload",
+              "displayName": "payload",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ae56a28e-81ab-4042-a2ab-3bdf4c1bdb75",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.3,
+      "position": [
+        1220,
+        460
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "GsrLrefashmMjsw3",
+          "name": "Aelieve PROD"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "value": "display_items",
+          "mode": "list",
+          "cachedResultName": "display_items"
+        },
+        "table": {
+          "__rl": true,
+          "value": "Inbox_Emails",
+          "mode": "name"
+        },
+        "limit": 1,
+        "sort": {
+          "values": [
+            {
+              "column": "id",
+              "direction": "DESC"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "923579fa-36cd-473d-b419-78352de024a4",
+      "name": "Last Email ID",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.3,
+      "position": [
+        740,
+        460
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "GsrLrefashmMjsw3",
+          "name": "Aelieve PROD"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "35c81494-5f52-4257-841c-c3856c7fda0f",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "70b74acc-fa30-4b80-9308-ae4a19631b79",
+              "name": "sender_name",
+              "value": "={{ $('Webhook').item.json.query.sender_name }}",
+              "type": "string"
+            },
+            {
+              "id": "002f9b2c-d826-487c-8640-027c2f06cb5c",
+              "name": "inbox_from",
+              "value": "={{ $('Webhook').item.json.query.inbox_from }}",
+              "type": "string"
+            },
+            {
+              "id": "db0d869f-6703-44f8-bfe4-79d47ee2a4ff",
+              "name": "ticket_id",
+              "value": "={{ $('Webhook').item.json.query.ticket_id }}",
+              "type": "string"
+            },
+            {
+              "id": "5c75ddd9-72ef-4d57-9048-8dd5e70992fa",
+              "name": "message",
+              "value": "={{ $('Webhook').item.json.query.message }}",
+              "type": "string"
+            },
+            {
+              "id": "0cca82c4-db6b-4d5a-a59b-2633680931be",
+              "name": "to_email",
+              "value": "={{ $('Find Email Thread').item.json.sender }}",
+              "type": "string"
+            },
+            {
+              "id": "0c294d69-169d-430d-95d6-6ea3ef9dd6be",
+              "name": "from_email",
+              "value": "={{ $('Find Email Thread').item.json.recipient }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "00257b40-3183-4385-a18a-bcb9435b6b9f",
+      "name": "Set Fields Before Insert",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        980,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "value": "display_items",
+          "mode": "list",
+          "cachedResultName": "display_items"
+        },
+        "table": {
+          "__rl": true,
+          "value": "Inbox_Emails",
+          "mode": "name"
+        },
+        "returnAll": true,
+        "where": {
+          "values": [
+            {
+              "column": "customid",
+              "value": "={{ $json.query.ticket_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e097c86e-cc7a-4243-a2c1-9330420d23de",
+      "name": "Find Email Thread",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.3,
+      "position": [
+        540,
+        460
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "GsrLrefashmMjsw3",
+          "name": "Aelieve PROD"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.mailjet.com/v3.1/send",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n    \"Messages\":[\n        {\n                \"From\": {\n                        \"Email\": \"{{ $json[\"from\"] }}\",\n                        \"Name\": \"{{ $json[\"sender\"] }}\"\n                },\n                \"To\": [\n                        {\n                                \"Email\": \"{{ $json[\"recipient\"] }}\",\n                                \"Name\": \"Andrew Venenga\"\n                        }\n                ],\n                \"Subject\": \"{{ $json[\"subject\"] }}\",\n                \"TextPart\": \"{{ $json[\"text-part\"] }}\",\n                \"CustomID\": \"{{ $json[\"customid\"] }}\"\n        }\n    ]\n}",
+        "options": {}
+      },
+      "id": "0720c9fd-f39c-437c-b554-565d2395f801",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1440,
+        460
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "9kQ8CpFKHOrz3jyr",
+          "name": "MailJet CLI"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Find Email Thread",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Last Email ID": {
+      "main": [
+        [
+          {
+            "node": "Set Fields Before Insert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Fields Before Insert": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Email Thread": {
+      "main": [
+        [
+          {
+            "node": "Last Email ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "20da6237-e7fd-40dd-be32-04c9b1be2143",
+  "owner": "ryantoth@aelieve.com"
+}
