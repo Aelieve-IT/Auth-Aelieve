@@ -1,0 +1,35 @@
+{
+  "id": "9kQ8CpFKHOrz3jyr",
+  "name": "MailJet CLI",
+  "type": "httpBasicAuth",
+  "data": {
+    "user": "",
+    "password": ""
+  },
+  "nodesAccess": [
+    {
+      "nodeType": "n8n-nodes-base.graphql",
+      "date": "2024-03-06T22:47:30.847Z"
+    },
+    {
+      "nodeType": "n8n-nodes-base.httpRequest",
+      "date": "2024-03-06T22:47:30.847Z"
+    },
+    {
+      "nodeType": "n8n-nodes-base.pipedriveTrigger",
+      "date": "2024-03-06T22:47:30.847Z"
+    },
+    {
+      "nodeType": "n8n-nodes-base.wait",
+      "date": "2024-03-06T22:47:30.847Z"
+    },
+    {
+      "nodeType": "n8n-nodes-base.webhook",
+      "date": "2024-03-06T22:47:30.847Z"
+    },
+    {
+      "nodeType": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "date": "2024-03-06T22:47:30.847Z"
+    }
+  ]
+}
