@@ -233,53 +233,6 @@
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "017e0d9d-4346-4c28-a82d-6bed2c0ee8b1",
-              "name": "headers",
-              "value": "={{ $('Is Microsoft').item.json.headers }}",
-              "type": "object"
-            },
-            {
-              "id": "221624b3-fe6d-4df1-b20b-3af0bb1a736e",
-              "name": "body",
-              "value": "={{ $('Is Microsoft').item.json.body }}",
-              "type": "object"
-            },
-            {
-              "id": "73de4ed4-f17f-4c39-b227-951efd22d070",
-              "name": "MessageID",
-              "value": "={{ $json.NewMessageID }}",
-              "type": "string"
-            },
-            {
-              "id": "e7ab8210-2c13-48ef-b038-2266c65e951b",
-              "name": "cleanedMessage",
-              "value": "={{ $('Clean All HTML').item.json.cleanedMessage }}",
-              "type": "string"
-            },
-            {
-              "id": "dfb4b02b-4a78-4a3c-a182-5b8275fe468d",
-              "name": "id",
-              "value": "={{ $json.id }}",
-              "type": "number"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "3cf64e58-8d65-4c9d-851e-08dcc89df7d3",
-      "name": "Combine for insert",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.3,
-      "position": [
-        2640,
-        360
-      ]
-    },
-    {
-      "parameters": {
         "operation": "select",
         "schema": {
           "__rl": true,
@@ -309,7 +262,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.3,
       "position": [
-        2100,
+        2080,
         780
       ],
       "credentials": {
@@ -341,7 +294,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1780,
+        1740,
         780
       ]
     },
@@ -367,7 +320,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1940,
+        1900,
         780
       ]
     },
@@ -402,80 +355,6 @@
       "position": [
         1620,
         520
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict"
-          },
-          "conditions": [
-            {
-              "id": "18f1c920-f725-48b8-8f59-e03eb1fff258",
-              "leftValue": "={{ $json.body.Headers[\"X-Google-DKIM-Signatur\"] }}",
-              "rightValue": "",
-              "operator": {
-                "type": "array",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "id": "fe5863b0-bda9-4a95-b567-df1593d8b59b",
-      "name": "Is Google",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2,
-      "position": [
-        1600,
-        780
-      ]
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "017e0d9d-4346-4c28-a82d-6bed2c0ee8b1",
-              "name": "headers",
-              "value": "={{ $('Is Google').item.json.headers }}",
-              "type": "object"
-            },
-            {
-              "id": "221624b3-fe6d-4df1-b20b-3af0bb1a736e",
-              "name": "body",
-              "value": "={{ $('Is Google').item.json.body }}",
-              "type": "object"
-            },
-            {
-              "id": "73de4ed4-f17f-4c39-b227-951efd22d070",
-              "name": "id",
-              "value": "={{ $json.id }}",
-              "type": "number"
-            },
-            {
-              "id": "e7ab8210-2c13-48ef-b038-2266c65e951b",
-              "name": "cleanedMessage",
-              "value": "={{ $('Clean All HTML1').item.json.cleanedMessage }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "00bc08e9-f08b-4f65-8dbe-8c6e26d9fde4",
-      "name": "Combine for insert1",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.3,
-      "position": [
-        2280,
-        780
       ]
     },
     {
@@ -644,19 +523,6 @@
     },
     {
       "parameters": {
-        "jsCode": "// Define the n8n Function Node code\nreturn items.map(item => {\n  // Extract the Message-ID from the incoming item, assuming it's stored under the 'Message-ID' key\n  let messageID = $('Is Microsoft').item.json.body.Headers[\"Message-ID\"];\n\n  // Check if the messageID exists and is a string\n  if (typeof messageID === 'string' && messageID.length > 0) {\n    // Remove the first character if it is '<'\n    if (messageID.startsWith('<')) {\n      messageID = messageID.substring(1);\n    }\n\n    // Find the index of the '@' character\n    const atIndex = messageID.indexOf('@');\n\n    // If the '@' is found, extract the text up to it; otherwise, keep the whole string\n    if (atIndex !== -1) {\n      messageID = messageID.substring(0, atIndex);\n    }\n\n    // Update the item with the new modified Message-ID\n    item.json['NewMessageID'] = messageID;\n  }\n\n  // Return the modified item\n  return item;\n});"
-      },
-      "id": "ac859b55-599b-4d5d-b0ce-1e480de103f3",
-      "name": "Code",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2400,
-        360
-      ]
-    },
-    {
-      "parameters": {
         "rules": {
           "values": [
             {
@@ -717,39 +583,6 @@
       "position": [
         3000,
         -100
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict"
-          },
-          "conditions": [
-            {
-              "id": "f868eede-e8fa-4a79-8a2c-28840b0ff607",
-              "leftValue": "yes",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "notExists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "id": "51190f66-614b-40ba-8edf-0eca0364d96e",
-      "name": "If3",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2,
-      "position": [
-        3660,
-        360
       ]
     },
     {
@@ -898,332 +731,6 @@
       "position": [
         4120,
         400
-      ],
-      "credentials": {
-        "postgres": {
-          "id": "GsrLrefashmMjsw3",
-          "name": "Aelieve PROD"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "cbc8b31b-5e1b-472a-94c6-d0e6e54eab44",
-              "name": "id",
-              "value": "={{ $json.id + 1}}",
-              "type": "number"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "78b66b6a-c123-4bbc-b003-76ef83b751bc",
-      "name": "Edit Fields",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.3,
-      "position": [
-        4320,
-        400
-      ]
-    },
-    {
-      "parameters": {
-        "operation": "select",
-        "schema": {
-          "__rl": true,
-          "value": "display_items",
-          "mode": "list",
-          "cachedResultName": "display_items"
-        },
-        "table": {
-          "__rl": true,
-          "value": "Inbox_Tickets",
-          "mode": "name"
-        },
-        "where": {
-          "values": [
-            {
-              "column": "reference_to_email_thread",
-              "value": "={{ $('Insert into Display_Items.Inbox_Emails').item.json.message_id }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "024db32a-ea8e-4839-ba17-0645106406aa",
-      "name": "Check if Ticket Exists",
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.3,
-      "position": [
-        3480,
-        360
-      ],
-      "alwaysOutputData": true,
-      "credentials": {
-        "postgres": {
-          "id": "GsrLrefashmMjsw3",
-          "name": "Aelieve PROD"
-        }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "schema": {
-          "__rl": true,
-          "value": "display_items",
-          "mode": "list",
-          "cachedResultName": "display_items"
-        },
-        "table": {
-          "__rl": true,
-          "value": "Inbox_Tickets",
-          "mode": "name"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "id": "={{ $('Edit Fields').item.json.id + 1}}",
-            "inbox_id": 0,
-            "primary_company_id": "={{ $('Get, ContactID, OrgID and main_account_manager and userid of account manager1').item.json.organization_id }}",
-            "created_at": "={{ $now }}",
-            "last_message_received_date": "={{ $now }}",
-            "ticket_status": "new",
-            "last_activity_date": "={{ $now }}",
-            "ticket_name": "={{ $('Combine for insert').item.json.body.Subject }}",
-            "ticket_description": "={{ $('Combine for insert').item.json.cleanedMessage }}",
-            "reference_to_email_thread": "={{ $('Insert into Display_Items.Inbox_Emails').item.json.message_id }}",
-            "user_ids_of_all_owners": "={{ $('Get, ContactID, OrgID and main_account_manager and userid of account manager1').item.json.user_id }}",
-            "all_owner_ids": "={{ $('Get, ContactID, OrgID and main_account_manager and userid of account manager1').item.json.user_id }}"
-          },
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": [
-            {
-              "id": "id",
-              "displayName": "id",
-              "required": true,
-              "defaultMatch": true,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "add_recipients",
-              "displayName": "add_recipients",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "created_at",
-              "displayName": "created_at",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "inbox_id",
-              "displayName": "inbox_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "last_message_received_date",
-              "displayName": "last_message_received_date",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "last_response_date",
-              "displayName": "last_response_date",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "last_activity_date",
-              "displayName": "last_activity_date",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "last_contacted_date",
-              "displayName": "last_contacted_date",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "latest_message_seen_by_agent_ids",
-              "displayName": "latest_message_seen_by_agent_ids",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "ticket_status",
-              "displayName": "ticket_status",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "primary_company_id",
-              "displayName": "primary_company_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "priority",
-              "displayName": "priority",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "user_ids_of_all_owners",
-              "displayName": "user_ids_of_all_owners",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "last_customer_reply_date",
-              "displayName": "last_customer_reply_date",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "reference_to_email_thread",
-              "displayName": "reference_to_email_thread",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "last_contacted_ticket_note",
-              "displayName": "last_contacted_ticket_note",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "last_activity_date_ticket_note",
-              "displayName": "last_activity_date_ticket_note",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "all_owner_ids",
-              "displayName": "all_owner_ids",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "ticket_name",
-              "displayName": "ticket_name",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "ticket_description",
-              "displayName": "ticket_description",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "thread_id",
-              "displayName": "thread_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "1729a353-238b-4f94-95e6-934fba079441",
-      "name": "Create New Ticket",
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.3,
-      "position": [
-        4560,
-        380
       ],
       "credentials": {
         "postgres": {
@@ -1498,11 +1005,11 @@
           "conditions": [
             {
               "id": "f868eede-e8fa-4a79-8a2c-28840b0ff607",
-              "leftValue": "yes",
+              "leftValue": "={{ $json.id }}",
               "rightValue": "",
               "operator": {
                 "type": "string",
-                "operation": "notExists",
+                "operation": "exists",
                 "singleValue": true
               }
             }
@@ -1519,300 +1026,6 @@
         3300,
         780
       ]
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT \n    c.id AS contact_id, \n    c.contact_name, \n    c.first_name, \n    c.last_name\nFROM \n    display_items.\"CRM_Contacts\" c\nJOIN \n    relations.\"REL_ContactEmails\" r ON c.id = r.contact_id\nJOIN \n    display_items.\"CRM_Contact_Emails\" e ON r.email_id = e.id\nWHERE \n    e.email_address = '{{ $input.item.json.sender }}';\n",
-        "options": {}
-      },
-      "id": "fa0f656a-e8ef-473f-9ce3-9f85b0026c7f",
-      "name": "Find Contact who sent email",
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.3,
-      "position": [
-        2700,
-        780
-      ],
-      "credentials": {
-        "postgres": {
-          "id": "GsrLrefashmMjsw3",
-          "name": "Aelieve PROD"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "schema": {
-          "__rl": true,
-          "value": "display_items",
-          "mode": "list",
-          "cachedResultName": "display_items"
-        },
-        "table": {
-          "__rl": true,
-          "value": "Inbox_Emails",
-          "mode": "list",
-          "cachedResultName": "Inbox_Emails"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "sender": "={{ $json.body.Sender }}",
-            "recipient": "={{ $json.body.Recipient }}",
-            "date": "={{ $json.body.Date }}",
-            "from": "={{ $json.body.From }}",
-            "subject": "={{ $json.body.Subject }}",
-            "headers": "={{ $json.body.Headers }}",
-            "html-part": "={{ $json.body[\"Html-part\"] }}",
-            "spamassassinScore": "={{ $json.body.SpamAssassinScore }}",
-            "customid": "={{ $json.body.CustomID }}",
-            "text-part": "={{ $json.cleanedMessage }}",
-            "id": "={{ $json.id + 1}}"
-          },
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": [
-            {
-              "id": "id",
-              "displayName": "id",
-              "required": true,
-              "defaultMatch": true,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "sender",
-              "displayName": "sender",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "recipient",
-              "displayName": "recipient",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "date",
-              "displayName": "date",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "dateTime",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "from",
-              "displayName": "from",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "subject",
-              "displayName": "subject",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "headers",
-              "displayName": "headers",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "object",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "text-part",
-              "displayName": "text-part",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "html-part",
-              "displayName": "html-part",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "spamassassinScore",
-              "displayName": "spamassassinScore",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "customid",
-              "displayName": "customid",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "payload",
-              "displayName": "payload",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "9041837c-a1e2-4fe7-beed-ee94ea250f73",
-      "name": "Insert into Display_Items.Inbox_Emails1",
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.3,
-      "position": [
-        2500,
-        780
-      ],
-      "credentials": {
-        "postgres": {
-          "id": "GsrLrefashmMjsw3",
-          "name": "Aelieve PROD"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "schema": {
-          "__rl": true,
-          "value": "relations",
-          "mode": "list",
-          "cachedResultName": "relations"
-        },
-        "table": {
-          "__rl": true,
-          "value": "REL_EmailContact",
-          "mode": "list",
-          "cachedResultName": "REL_EmailContact"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "contact_id": "={{ $('Find Contact who sent email').item.json.contact_id }}",
-            "email_id": "={{ $('Insert into Display_Items.Inbox_Emails1').item.json.id }}",
-            "id": "={{ $('Insert into Display_Items.Inbox_Emails1').item.json.id  + '.' + $('Find Contact who sent email').item.json.contact_id}}"
-          },
-          "matchingColumns": [
-            "id"
-          ],
-          "schema": [
-            {
-              "id": "id",
-              "displayName": "id",
-              "required": true,
-              "defaultMatch": true,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "email_id",
-              "displayName": "email_id",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "contact_id",
-              "displayName": "contact_id",
-              "required": true,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "462cf0a4-b8d2-4c16-9072-855c45a05229",
-      "name": "Create REL Record | Email -> Contact",
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.3,
-      "position": [
-        2900,
-        780
-      ],
-      "credentials": {
-        "postgres": {
-          "id": "GsrLrefashmMjsw3",
-          "name": "Aelieve PROD"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "select",
-        "schema": {
-          "__rl": true,
-          "value": "display_items",
-          "mode": "list",
-          "cachedResultName": "display_items"
-        },
-        "table": {
-          "__rl": true,
-          "value": "Inbox_Tickets",
-          "mode": "name"
-        },
-        "where": {
-          "values": [
-            {
-              "column": "reference_to_email_thread",
-              "value": "={{ $('Insert into Display_Items.Inbox_Emails1').item.json.message_id }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "c01ca600-874a-4abe-8340-13b36f53f6ff",
-      "name": "Check if Ticket Exists1",
-      "type": "n8n-nodes-base.postgres",
-      "typeVersion": 2.3,
-      "position": [
-        3120,
-        780
-      ],
-      "alwaysOutputData": true,
-      "credentials": {
-        "postgres": {
-          "id": "GsrLrefashmMjsw3",
-          "name": "Aelieve PROD"
-        }
-      },
-      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -2531,6 +1744,824 @@
           "name": "Aelieve PROD"
         }
       }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cbc8b31b-5e1b-472a-94c6-d0e6e54eab44",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "78b66b6a-c123-4bbc-b003-76ef83b751bc",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        4320,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "value": "display_items",
+          "mode": "list",
+          "cachedResultName": "display_items"
+        },
+        "table": {
+          "__rl": true,
+          "value": "Inbox_Tickets",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Edit Fields').item.json.id + 1}}",
+            "inbox_id": 0,
+            "primary_company_id": "={{ $('Get, ContactID, OrgID and main_account_manager and userid of account manager1').item.json.organization_id }}",
+            "created_at": "={{ $now }}",
+            "last_message_received_date": "={{ $now }}",
+            "ticket_status": "new",
+            "last_activity_date": "={{ $now }}",
+            "ticket_name": "={{ $('Combine for insert').item.json.body.Subject }}",
+            "ticket_description": "={{ $('Combine for insert').item.json.cleanedMessage }}",
+            "reference_to_email_thread": "={{ $('Insert into Display_Items.Inbox_Emails').item.json.message_id }}",
+            "user_ids_of_all_owners": "={{ $('Get, ContactID, OrgID and main_account_manager and userid of account manager1').item.json.user_id }}",
+            "all_owner_ids": "={{ $('Get, ContactID, OrgID and main_account_manager and userid of account manager1').item.json.user_id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": true,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "add_recipients",
+              "displayName": "add_recipients",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "inbox_id",
+              "displayName": "inbox_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "last_message_received_date",
+              "displayName": "last_message_received_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "last_response_date",
+              "displayName": "last_response_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "last_activity_date",
+              "displayName": "last_activity_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "last_contacted_date",
+              "displayName": "last_contacted_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "latest_message_seen_by_agent_ids",
+              "displayName": "latest_message_seen_by_agent_ids",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ticket_status",
+              "displayName": "ticket_status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "primary_company_id",
+              "displayName": "primary_company_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "user_ids_of_all_owners",
+              "displayName": "user_ids_of_all_owners",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "last_customer_reply_date",
+              "displayName": "last_customer_reply_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "reference_to_email_thread",
+              "displayName": "reference_to_email_thread",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "last_contacted_ticket_note",
+              "displayName": "last_contacted_ticket_note",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "last_activity_date_ticket_note",
+              "displayName": "last_activity_date_ticket_note",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "all_owner_ids",
+              "displayName": "all_owner_ids",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ticket_name",
+              "displayName": "ticket_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ticket_description",
+              "displayName": "ticket_description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "thread_id",
+              "displayName": "thread_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1729a353-238b-4f94-95e6-934fba079441",
+      "name": "Create New Ticket",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.3,
+      "position": [
+        4500,
+        400
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "GsrLrefashmMjsw3",
+          "name": "Aelieve PROD"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "value": "display_items",
+          "mode": "list",
+          "cachedResultName": "display_items"
+        },
+        "table": {
+          "__rl": true,
+          "value": "Inbox_Tickets",
+          "mode": "name"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "reference_to_email_thread",
+              "value": "={{ $('Insert into Display_Items.Inbox_Emails').item.json.message_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "024db32a-ea8e-4839-ba17-0645106406aa",
+      "name": "Check if Ticket Exists",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.3,
+      "position": [
+        3480,
+        360
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "GsrLrefashmMjsw3",
+          "name": "Aelieve PROD"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Define the n8n Function Node code\nreturn items.map(item => {\n  // Extract the Message-ID from the incoming item\n  let messageID = $('Is Microsoft').item.json.body.Headers[\"Message-ID\"];\n\n  // Check if the 'References' header is defined and not undefined\n  if ($('Is Microsoft').item.json.body.Headers[\"References\"] !== undefined) {\n    // If 'References' is defined, use it as the messageID\n    messageID = $('Is Microsoft').item.json.body.Headers[\"References\"];\n  }\n\n  // Check if the messageID exists and is a string\n  if (typeof messageID === 'string' && messageID.length > 0) {\n    // Remove the first character if it is '<'\n    if (messageID.startsWith('<')) {\n      messageID = messageID.substring(1);\n    }\n\n    // Find the index of the '@' character\n    const atIndex = messageID.indexOf('@');\n\n    // If the '@' is found, extract the text up to it; otherwise, keep the whole string\n    if (atIndex !== -1) {\n      messageID = messageID.substring(0, atIndex);\n    }\n\n    // Update the item with the new modified Message-ID\n    item.json['NewMessageID'] = messageID;\n  }\n\n  // Return the modified item\n  return item;\n});\n"
+      },
+      "id": "ac859b55-599b-4d5d-b0ce-1e480de103f3",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2400,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Define the n8n Function Node code\nreturn items.map(item => {\n  // Extract the Message-ID from the incoming item\n  let messageID = $('Is Microsoft').item.json.body.Headers[\"Message-ID\"];\n\n  // Check if the 'References' header is defined and not undefined\n  if ($('Is Microsoft').item.json.body.Headers[\"References\"] !== undefined) {\n    // If 'References' is defined, use it as the messageID\n    messageID = $('Is Microsoft').item.json.body.Headers[\"References\"];\n  }\n\n  // Check if the messageID exists and is a string\n  if (typeof messageID === 'string' && messageID.length > 0) {\n    // Remove the first character if it is '<'\n    if (messageID.startsWith('<')) {\n      messageID = messageID.substring(1);\n    }\n\n    // Find the index of the '@' character\n    const atIndex = messageID.indexOf('@');\n\n    // If the '@' is found, extract the text up to it; otherwise, keep the whole string\n    if (atIndex !== -1) {\n      messageID = messageID.substring(0, atIndex);\n    }\n\n    // Update the item with the new modified Message-ID\n    item.json['NewMessageID'] = messageID;\n  }\n\n  // Return the modified item\n  return item;\n});\n"
+      },
+      "id": "570aae55-b6b1-4c91-9278-a91f238617f3",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2220,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "017e0d9d-4346-4c28-a82d-6bed2c0ee8b1",
+              "name": "headers",
+              "value": "={{ $('Is Microsoft').item.json.headers }}",
+              "type": "object"
+            },
+            {
+              "id": "221624b3-fe6d-4df1-b20b-3af0bb1a736e",
+              "name": "body",
+              "value": "={{ $('Is Microsoft').item.json.body }}",
+              "type": "object"
+            },
+            {
+              "id": "73de4ed4-f17f-4c39-b227-951efd22d070",
+              "name": "MessageID",
+              "value": "={{ $json.NewMessageID }}",
+              "type": "string"
+            },
+            {
+              "id": "e7ab8210-2c13-48ef-b038-2266c65e951b",
+              "name": "cleanedMessage",
+              "value": "={{ $('Clean All HTML').item.json.cleanedMessage }}",
+              "type": "string"
+            },
+            {
+              "id": "dfb4b02b-4a78-4a3c-a182-5b8275fe468d",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3cf64e58-8d65-4c9d-851e-08dcc89df7d3",
+      "name": "Combine for insert",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        2640,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "017e0d9d-4346-4c28-a82d-6bed2c0ee8b1",
+              "name": "headers",
+              "value": "={{ $('Is Google').item.json.headers }}",
+              "type": "object"
+            },
+            {
+              "id": "221624b3-fe6d-4df1-b20b-3af0bb1a736e",
+              "name": "body",
+              "value": "={{ $('Is Google').item.json.body }}",
+              "type": "object"
+            },
+            {
+              "id": "73de4ed4-f17f-4c39-b227-951efd22d070",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "e7ab8210-2c13-48ef-b038-2266c65e951b",
+              "name": "cleanedMessage",
+              "value": "={{ $('Clean All HTML1').item.json.cleanedMessage }}",
+              "type": "string"
+            },
+            {
+              "id": "6eb19cf9-e168-47c3-8fec-fb14e7ea61d2",
+              "name": "MessageID",
+              "value": "={{ $json.NewMessageID }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "00bc08e9-f08b-4f65-8dbe-8c6e26d9fde4",
+      "name": "Combine for insert1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        2360,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "f868eede-e8fa-4a79-8a2c-28840b0ff607",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "51190f66-614b-40ba-8edf-0eca0364d96e",
+      "name": "If3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        3660,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "18f1c920-f725-48b8-8f59-e03eb1fff258",
+              "leftValue": "={{ $json.body.Headers[\"X-Google-DKIM-Signature\"] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "fe5863b0-bda9-4a95-b567-df1593d8b59b",
+      "name": "Is Google",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "value": "display_items",
+          "mode": "list",
+          "cachedResultName": "display_items"
+        },
+        "table": {
+          "__rl": true,
+          "value": "Inbox_Emails",
+          "mode": "list",
+          "cachedResultName": "Inbox_Emails"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "sender": "={{ $json.body.Sender }}",
+            "recipient": "={{ $json.body.Recipient }}",
+            "date": "={{ $json.body.Date }}",
+            "from": "={{ $json.body.From }}",
+            "subject": "={{ $json.body.Subject }}",
+            "headers": "={{ $json.body.Headers }}",
+            "html-part": "={{ $json.body[\"Html-part\"] }}",
+            "spamassassinScore": "={{ $json.body.SpamAssassinScore }}",
+            "text-part": "={{ $json.cleanedMessage }}",
+            "id": "={{ $json.id + 1}}",
+            "send_recieve": "recieve",
+            "message_id": "={{ $json.MessageID }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": true,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sender",
+              "displayName": "sender",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "recipient",
+              "displayName": "recipient",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "from",
+              "displayName": "from",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "subject",
+              "displayName": "subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headers",
+              "displayName": "headers",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "text-part",
+              "displayName": "text-part",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "html-part",
+              "displayName": "html-part",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "spamassassinScore",
+              "displayName": "spamassassinScore",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "message_id",
+              "displayName": "message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "payload",
+              "displayName": "payload",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "send_recieve",
+              "displayName": "send_recieve",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f63dbd72-87e5-4ee6-89a4-d5a48f5ee917",
+      "name": "Insert into Display_Items.Inbox_Emails1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.3,
+      "position": [
+        2520,
+        780
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "GsrLrefashmMjsw3",
+          "name": "Aelieve PROD"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n    c.id AS contact_id, \n    c.contact_name, \n    c.first_name, \n    c.last_name\nFROM \n    display_items.\"CRM_Contacts\" c\nJOIN \n    relations.\"REL_ContactEmails\" r ON c.id = r.contact_id\nJOIN \n    display_items.\"CRM_Contact_Emails\" e ON r.email_id = e.id\nWHERE \n    e.email_address = '{{ $input.item.json.sender }}';\n",
+        "options": {}
+      },
+      "id": "8d343d25-8ff7-4122-8f2d-94fb6a0af8ca",
+      "name": "Find Contact who sent email",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.3,
+      "position": [
+        2700,
+        780
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "GsrLrefashmMjsw3",
+          "name": "Aelieve PROD"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "value": "relations",
+          "mode": "list",
+          "cachedResultName": "relations"
+        },
+        "table": {
+          "__rl": true,
+          "value": "REL_EmailContact",
+          "mode": "list",
+          "cachedResultName": "REL_EmailContact"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "contact_id": "={{ $('Find Contact who sent email').item.json.contact_id }}",
+            "email_id": "={{ $('Insert into Display_Items.Inbox_Emails1').item.json.id }}",
+            "id": "={{ $('Insert into Display_Items.Inbox_Emails1').item.json.id  + '.' + $('Find Contact who sent email').item.json.contact_id}}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": true,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email_id",
+              "displayName": "email_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "contact_id",
+              "displayName": "contact_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "551f5be2-8912-4679-b839-4dfa59d7ac62",
+      "name": "Create REL Record | Email -> Contact",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.3,
+      "position": [
+        2880,
+        780
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "GsrLrefashmMjsw3",
+          "name": "Aelieve PROD"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "value": "display_items",
+          "mode": "list",
+          "cachedResultName": "display_items"
+        },
+        "table": {
+          "__rl": true,
+          "value": "Inbox_Tickets",
+          "mode": "name"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "reference_to_email_thread",
+              "value": "={{ $('Insert into Display_Items.Inbox_Emails1').item.json.message_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c01ca600-874a-4abe-8340-13b36f53f6ff",
+      "name": "Check if Ticket Exists1",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.3,
+      "position": [
+        3080,
+        780
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "GsrLrefashmMjsw3",
+          "name": "Aelieve PROD"
+        }
+      },
+      "onError": "continueRegularOutput"
     }
   ],
   "connections": {
@@ -2618,29 +2649,11 @@
         ]
       ]
     },
-    "Is Google": {
-      "main": [
-        [
-          {
-            "node": "Remove Email Sig1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Error Email",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Select Last Email by ID1": {
       "main": [
         [
           {
-            "node": "Combine for insert1",
+            "node": "Code1",
             "type": "main",
             "index": 0
           }
@@ -2652,39 +2665,6 @@
         [
           {
             "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Combine for insert": {
-      "main": [
-        [
-          {
-            "node": "Insert into Display_Items.Inbox_Emails",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Combine for insert1": {
-      "main": [
-        [
-          {
-            "node": "Insert into Display_Items.Inbox_Emails1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code": {
-      "main": [
-        [
-          {
-            "node": "Combine for insert",
             "type": "main",
             "index": 0
           }
@@ -2724,24 +2704,6 @@
         ]
       ]
     },
-    "If3": {
-      "main": [
-        [
-          {
-            "node": "Update Tickets Table",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Get, ContactID, OrgID and main_account_manager and userid of account manager1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Get, ContactID, OrgID and main_account_manager and userid of account manager1": {
       "main": [
         [
@@ -2764,28 +2726,6 @@
         ]
       ]
     },
-    "Edit Fields": {
-      "main": [
-        [
-          {
-            "node": "Create New Ticket",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Check if Ticket Exists": {
-      "main": [
-        [
-          {
-            "node": "If3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "If4": {
       "main": [
         [
@@ -2798,50 +2738,6 @@
         [
           {
             "node": "Get, ContactID, OrgID and main_account_manager and userid of account manager",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Find Contact who sent email": {
-      "main": [
-        [
-          {
-            "node": "Create REL Record | Email -> Contact",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Insert into Display_Items.Inbox_Emails1": {
-      "main": [
-        [
-          {
-            "node": "Find Contact who sent email",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create REL Record | Email -> Contact": {
-      "main": [
-        [
-          {
-            "node": "Check if Ticket Exists1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Check if Ticket Exists1": {
-      "main": [
-        [
-          {
-            "node": "If4",
             "type": "main",
             "index": 0
           }
@@ -2881,6 +2777,28 @@
         ]
       ]
     },
+    "Create New Ticket1": {
+      "main": [
+        [
+          {
+            "node": "Create REL_TicketThread1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Create New Ticket",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Create New Ticket": {
       "main": [
         [
@@ -2892,11 +2810,135 @@
         ]
       ]
     },
-    "Create New Ticket1": {
+    "Check if Ticket Exists": {
       "main": [
         [
           {
-            "node": "Create REL_TicketThread1",
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Combine for insert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Combine for insert1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine for insert": {
+      "main": [
+        [
+          {
+            "node": "Insert into Display_Items.Inbox_Emails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine for insert1": {
+      "main": [
+        [
+          {
+            "node": "Insert into Display_Items.Inbox_Emails1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Update Tickets Table",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get, ContactID, OrgID and main_account_manager and userid of account manager1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Google": {
+      "main": [
+        [
+          {
+            "node": "Remove Email Sig1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert into Display_Items.Inbox_Emails1": {
+      "main": [
+        [
+          {
+            "node": "Find Contact who sent email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Contact who sent email": {
+      "main": [
+        [
+          {
+            "node": "Create REL Record | Email -> Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create REL Record | Email -> Contact": {
+      "main": [
+        [
+          {
+            "node": "Check if Ticket Exists1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if Ticket Exists1": {
+      "main": [
+        [
+          {
+            "node": "If4",
             "type": "main",
             "index": 0
           }
@@ -2911,6 +2953,6 @@
     "callerPolicy": "any"
   },
   "triggerCount": 1,
-  "versionId": "3891183b-503c-48fc-a03a-d64919047786",
+  "versionId": "4e44a7b7-8f28-413c-bd87-19d8d00c8643",
   "owner": "andrew@aelieve.it"
 }
