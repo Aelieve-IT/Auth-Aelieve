@@ -490,7 +490,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT\n    c.id AS contact_id,\n    roc.org_id AS organization_id,\n    ruo.user_id AS user_id\nFROM\n    display_items.\"CRM_Contacts\" AS c\nINNER JOIN\n    relations.\"REL_ContactEmails\" AS rce ON c.id = rce.contact_id\nINNER JOIN\n    display_items.\"CRM_Contact_Emails\" AS ce ON rce.email_id = ce.id\nLEFT JOIN\n    relations.\"REL_OrgContacts\" AS roc ON c.id = roc.contact_id\nLEFT JOIN\n    relations.\"REL_EmployeesOrgs\" AS ruo ON roc.org_id = ruo.org_id\nWHERE\n    ce.email_address = '{{ $('Postgres1').item.json.from }}'; -- Replace 'provided_email@example.com' with the actual email address",
+        "query": "SELECT\n    c.id AS contact_id,\n    roc.org_id AS organization_id,\n    ruo.emp_id AS user_id\nFROM\n    display_items.\"CRM_Contacts\" AS c\nINNER JOIN\n    relations.\"REL_ContactEmails\" AS rce ON c.id = rce.contact_id\nINNER JOIN\n    display_items.\"CRM_Contact_Emails\" AS ce ON rce.email_id = ce.id\nLEFT JOIN\n    relations.\"REL_OrgContacts\" AS roc ON c.id = roc.contact_id\nLEFT JOIN\n    relations.\"REL_EmployeesOrgs\" AS ruo ON roc.org_id = ruo.org_id\nWHERE\n    ce.email_address = '{{ $('Postgres1').item.json.from }}'; -- Replace 'provided_email@example.com' with the actual email address",
         "options": {}
       },
       "id": "a7c56907-89bd-4d85-8dcd-f917c62eac0f",
@@ -3450,6 +3450,6 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "9bbf520e-e6de-4b6b-af28-d3a1fe87241a",
+  "versionId": "d056ed33-2415-445b-9615-7adf306684f7",
   "owner": "andrew@aelieve.it"
 }
