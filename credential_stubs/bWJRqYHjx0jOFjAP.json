@@ -1,0 +1,34 @@
+{
+  "id": "bWJRqYHjx0jOFjAP",
+  "name": "OpenAi account",
+  "type": "openAiApi",
+  "data": {
+    "apiKey": ""
+  },
+  "nodesAccess": [
+    {
+      "nodeType": "n8n-nodes-base.openAi",
+      "date": "2024-03-11T05:32:10.756Z"
+    },
+    {
+      "nodeType": "@n8n/n8n-nodes-langchain.openAi",
+      "date": "2024-03-11T05:32:10.756Z"
+    },
+    {
+      "nodeType": "@n8n/n8n-nodes-langchain.openAiAssistant",
+      "date": "2024-03-11T05:32:10.756Z"
+    },
+    {
+      "nodeType": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "date": "2024-03-11T05:32:10.756Z"
+    },
+    {
+      "nodeType": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "date": "2024-03-11T05:32:10.756Z"
+    },
+    {
+      "nodeType": "@n8n/n8n-nodes-langchain.lmOpenAi",
+      "date": "2024-03-11T05:32:10.756Z"
+    }
+  ]
+}

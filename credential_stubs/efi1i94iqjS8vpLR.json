@@ -1,0 +1,16 @@
+{
+  "id": "efi1i94iqjS8vpLR",
+  "name": "HubSpot account",
+  "type": "hubspotOAuth2Api",
+  "data": {
+    "clientId": "",
+    "clientSecret": "",
+    "csrfSecret": ""
+  },
+  "nodesAccess": [
+    {
+      "nodeType": "n8n-nodes-base.hubspot",
+      "date": "2024-03-09T00:00:07.706Z"
+    }
+  ]
+}

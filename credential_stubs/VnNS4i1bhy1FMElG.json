@@ -1,0 +1,28 @@
+{
+  "id": "VnNS4i1bhy1FMElG",
+  "name": "Microsoft Excel account",
+  "type": "microsoftExcelOAuth2Api",
+  "data": {
+    "grantType": "",
+    "authUrl": "",
+    "accessTokenUrl": "",
+    "clientId": "",
+    "clientSecret": "",
+    "scope": "",
+    "authQueryParameters": "",
+    "authentication": "",
+    "oauthTokenData": {
+      "token_type": "",
+      "scope": "",
+      "expires_in": 4319,
+      "ext_expires_in": 4319,
+      "access_token": "",
+      "refresh_token": "",
+      "id_token": "",
+      "callbackQueryString": {
+        "session_state": ""
+      }
+    }
+  },
+  "nodesAccess": []
+}
